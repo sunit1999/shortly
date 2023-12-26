@@ -21,7 +21,11 @@ class PersonController(private val personService: PersonService) {
     @GetMapping("/{id}")
     fun getPersonById(@PathVariable id: Long): PersonDTO? {
         val person = personService.getPersonById(id)
-        return person?.let { mapPersonToDTO(it) }
+
+        if (person != null)
+            return mapPersonToDTO(person)
+        else
+            throw ResourceNotFoundException("Person with ID $id not found")
     }
 
     @PostMapping
@@ -34,18 +38,22 @@ class PersonController(private val personService: PersonService) {
     @PutMapping("/{id}")
     fun updatePerson(@PathVariable id: Long, @RequestBody @Valid updatedPersonDTO: PersonDTO): PersonDTO? {
         val updatedPerson = personService.updatePerson(id, mapDTOToPerson(updatedPersonDTO))
-        return updatedPerson?.let { mapPersonToDTO(it) }
+
+        if (updatedPerson != null)
+            return mapPersonToDTO(updatedPerson)
+        else
+            throw ResourceNotFoundException("Person with ID $id not found")
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deletePerson(@PathVariable id: Long) {
         val existingPerson = personService.getPersonById(id)
-        if (existingPerson != null) {
+
+        if (existingPerson != null)
             personService.deletePerson(id)
-        } else {
+        else
             throw ResourceNotFoundException("Person with ID $id not found")
-        }
     }
 
     private fun mapPersonToDTO(person: Person): PersonDTO {
