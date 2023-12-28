@@ -15,12 +15,12 @@ class ShortUrlController(private val shortUrlService: ShortUrlService) {
     @PostMapping("/api/url/create")
     @ResponseStatus(HttpStatus.CREATED)
     fun createShortUrl(@RequestBody @Valid shortUrlDTO: ShortUrlDTO): ShortUrl {
-        return shortUrlService.createShortUrl(shortUrlDTO.longUrl)
+        return shortUrlService.createShortUrl(shortUrlDTO)
     }
 
-    @GetMapping("/{key}")
-    fun openShortUrl(@PathVariable @Size(min = 7, max = 7) key: String): RedirectView {
-        val longUrl = shortUrlService.getLongUrlFromKey(key).longUrl
+    @GetMapping("/{hash}")
+    fun openShortUrl(@PathVariable @Size(min = 7, max = 7) hash: String): RedirectView {
+        val longUrl = shortUrlService.getLongUrlFromHash(hash).longUrl
         return RedirectView(longUrl)
     }
 

@@ -1,5 +1,6 @@
 package com.sunit.demo.service
 
+import com.sunit.demo.dto.ShortUrlDTO
 import com.sunit.demo.models.ShortUrl
 import com.sunit.demo.repository.ShortUrlRepository
 import org.springframework.http.HttpStatus
@@ -12,18 +13,18 @@ import java.time.LocalDateTime
 @Service
 class ShortUrlService(val shortUrlRepository: ShortUrlRepository) {
 
-    fun getLongUrlFromKey(shortUrlKey: String): ShortUrl {
-        return shortUrlRepository.findById(shortUrlKey).orElseThrow {
-            ResponseStatusException(HttpStatus.NOT_FOUND, "No URL found for key $shortUrlKey")
+    fun getLongUrlFromHash(hash: String): ShortUrl {
+        return shortUrlRepository.findById(hash).orElseThrow {
+            ResponseStatusException(HttpStatus.NOT_FOUND, "No URL found for key $hash")
         }
     }
 
-    fun createShortUrl(longUrl: String): ShortUrl {
-        val hash = generateShortUrl(longUrl)
+    fun createShortUrl(shortUrlDTO: ShortUrlDTO): ShortUrl {
+        val hash = generateShortUrl(shortUrlDTO.longUrl)
         val shortUrlEntry = ShortUrl(
             hash = hash,
-            shortUrl = BASE_URL + hash,
-            longUrl = longUrl,
+            shortUrl = shortUrlDTO.domain + hash,
+            longUrl = shortUrlDTO.longUrl,
             createdAt = LocalDateTime.now(),
             expirationAt = LocalDateTime.now().plusYears(100)
         )
@@ -64,7 +65,5 @@ class ShortUrlService(val shortUrlRepository: ShortUrlRepository) {
 
     companion object {
         const val URL_LENGTH = 7
-        const val BASE_URL = "http://localhost:8080/"
     }
 }
-
