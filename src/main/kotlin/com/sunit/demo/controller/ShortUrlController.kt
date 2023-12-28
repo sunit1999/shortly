@@ -12,7 +12,7 @@ import org.springframework.web.servlet.view.RedirectView
 @RestController
 class ShortUrlController(private val shortUrlService: ShortUrlService) {
 
-    @PostMapping("/api/create")
+    @PostMapping("/api/url/create")
     @ResponseStatus(HttpStatus.CREATED)
     fun createShortUrl(@RequestBody @Valid shortUrlDTO: ShortUrlDTO): ShortUrl {
         return shortUrlService.createShortUrl(shortUrlDTO.longUrl)

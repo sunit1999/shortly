@@ -11,8 +11,8 @@ import java.time.LocalDateTime
 data class ShortUrl(
 
     @Id
-    @Column(name = "key", length = 7, nullable = false)
-    val key: String,
+    @Column(name = "hash", length = 7, nullable = false)
+    val hash: String,
 
     @Column(name = "short_url", length = 255, nullable = false)
     val shortUrl: String,

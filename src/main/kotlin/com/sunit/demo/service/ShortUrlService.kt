@@ -1,9 +1,10 @@
 package com.sunit.demo.service
 
-import com.sunit.demo.exception.ResourceNotFoundException
 import com.sunit.demo.models.ShortUrl
 import com.sunit.demo.repository.ShortUrlRepository
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.time.LocalDateTime
@@ -13,15 +14,15 @@ class ShortUrlService(val shortUrlRepository: ShortUrlRepository) {
 
     fun getLongUrlFromKey(shortUrlKey: String): ShortUrl {
         return shortUrlRepository.findById(shortUrlKey).orElseThrow {
-            throw ResourceNotFoundException("No URL found for key $shortUrlKey")
+            ResponseStatusException(HttpStatus.NOT_FOUND, "No URL found for key $shortUrlKey")
         }
     }
 
     fun createShortUrl(longUrl: String): ShortUrl {
-        val key = generateShortUrl(longUrl)
+        val hash = generateShortUrl(longUrl)
         val shortUrlEntry = ShortUrl(
-            key = key,
-            shortUrl = BASE_URL + key,
+            hash = hash,
+            shortUrl = BASE_URL + hash,
             longUrl = longUrl,
             createdAt = LocalDateTime.now(),
             expirationAt = LocalDateTime.now().plusYears(100)
