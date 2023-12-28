@@ -1,8 +1,8 @@
-package com.sunit.demo.controller
+package com.sunit.shortly.controller
 
-import com.sunit.demo.dto.ShortUrlDTO
-import com.sunit.demo.models.ShortUrl
-import com.sunit.demo.service.ShortUrlService
+import com.sunit.shortly.dto.ShortUrlDTO
+import com.sunit.shortly.models.ShortUrl
+import com.sunit.shortly.service.ShortUrlService
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Size
 import org.springframework.http.HttpStatus

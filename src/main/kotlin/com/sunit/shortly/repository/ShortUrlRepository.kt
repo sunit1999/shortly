@@ -1,6 +1,6 @@
-package com.sunit.demo.repository
+package com.sunit.shortly.repository
 
-import com.sunit.demo.models.ShortUrl
+import com.sunit.shortly.models.ShortUrl
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ShortUrlRepository : JpaRepository<ShortUrl, String>

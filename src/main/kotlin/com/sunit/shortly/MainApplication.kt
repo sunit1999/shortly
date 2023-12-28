@@ -1,11 +1,11 @@
-package com.sunit.demo
+package com.sunit.shortly
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class DemoApplication
+class MainApplication
 
 fun main(args: Array<String>) {
-	runApplication<DemoApplication>(*args)
+    runApplication<MainApplication>(*args)
 }

@@ -1,7 +1,7 @@
-package com.sunit.demo
+package com.sunit.shortly
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.sunit.demo.models.ShortUrl
+import com.sunit.shortly.models.ShortUrl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test

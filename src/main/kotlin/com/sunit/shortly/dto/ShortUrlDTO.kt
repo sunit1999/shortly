@@ -1,4 +1,4 @@
-package com.sunit.demo.dto
+package com.sunit.shortly.dto
 
 import jakarta.validation.constraints.NotBlank
 import org.hibernate.validator.constraints.URL

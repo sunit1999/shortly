@@ -1,8 +1,8 @@
-package com.sunit.demo.service
+package com.sunit.shortly.service
 
-import com.sunit.demo.dto.ShortUrlDTO
-import com.sunit.demo.models.ShortUrl
-import com.sunit.demo.repository.ShortUrlRepository
+import com.sunit.shortly.dto.ShortUrlDTO
+import com.sunit.shortly.models.ShortUrl
+import com.sunit.shortly.repository.ShortUrlRepository
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
