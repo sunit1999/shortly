@@ -1,5 +1,6 @@
 package com.sunit.demo.service
 
+import com.sunit.demo.exception.ResourceNotFoundException
 import com.sunit.demo.models.ShortUrl
 import com.sunit.demo.repository.ShortUrlRepository
 import org.springframework.stereotype.Service
@@ -9,6 +10,12 @@ import java.time.LocalDateTime
 
 @Service
 class ShortUrlService(val shortUrlRepository: ShortUrlRepository) {
+
+    fun getLongUrlFromKey(shortUrlKey: String): ShortUrl {
+        return shortUrlRepository.findById(shortUrlKey).orElseThrow {
+            throw ResourceNotFoundException("No URL found for key $shortUrlKey")
+        }
+    }
 
     fun createShortUrl(longUrl: String): ShortUrl {
         val key = generateShortUrl(longUrl)
