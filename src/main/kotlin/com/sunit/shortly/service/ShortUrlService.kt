@@ -19,11 +19,12 @@ class ShortUrlService(val shortUrlRepository: ShortUrlRepository) {
         }
     }
 
-    fun createShortUrl(shortUrlDTO: ShortUrlDTO): ShortUrl {
+    fun createShortUrl(domain: String, shortUrlDTO: ShortUrlDTO): ShortUrl {
+        val host = "http://$domain/"
         val hash = generateShortUrl(shortUrlDTO.longUrl)
         val shortUrlEntry = ShortUrl(
             hash = hash,
-            shortUrl = shortUrlDTO.domain + hash,
+            shortUrl = "$host$hash",
             longUrl = shortUrlDTO.longUrl,
             createdAt = LocalDateTime.now(),
             expirationAt = LocalDateTime.now().plusYears(100)

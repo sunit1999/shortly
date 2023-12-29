@@ -3,6 +3,7 @@ package com.sunit.shortly.controller
 import com.sunit.shortly.dto.ShortUrlDTO
 import com.sunit.shortly.models.ShortUrl
 import com.sunit.shortly.service.ShortUrlService
+import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Size
 import org.springframework.http.HttpStatus
@@ -14,8 +15,9 @@ class ShortUrlController(private val shortUrlService: ShortUrlService) {
 
     @PostMapping("/api/url/create")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createShortUrl(@RequestBody @Valid shortUrlDTO: ShortUrlDTO): ShortUrl {
-        return shortUrlService.createShortUrl(shortUrlDTO)
+    fun createShortUrl(@RequestBody @Valid shortUrlDTO: ShortUrlDTO, request: HttpServletRequest): ShortUrl {
+        val domain = request.getHeader("Host")
+        return shortUrlService.createShortUrl(domain, shortUrlDTO)
     }
 
     @GetMapping("/{hash}")

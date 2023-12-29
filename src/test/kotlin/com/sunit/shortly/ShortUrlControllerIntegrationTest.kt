@@ -32,6 +32,7 @@ class ShortUrlControllerIntegrationTest {
 	private fun createShortUrl(shortUrlDTO: String): ResultActions {
 		val result = mockMvc.perform(
 			post("/api/url/create")
+				.header("Host", "http://example.com/")
 				.content(shortUrlDTO)
 				.contentType(MediaType.APPLICATION_JSON)
 		)
@@ -43,11 +44,9 @@ class ShortUrlControllerIntegrationTest {
 	fun `test short url is created`() {
 		val shortUrlDTO = """
 			{
-				"domain": "http://example.com/",
 				"longUrl": "http://google.com/"
 			}
 			""".trimIndent()
-
 
 		val result = createShortUrl(shortUrlDTO)
 			.andExpect(status().isCreated)
@@ -61,23 +60,9 @@ class ShortUrlControllerIntegrationTest {
 	}
 
 	@Test
-	fun `test short url creation fails for empty domain`() {
-		val shortUrlDTO = """
-			{
-				"domain": "",
-				"longUrl": "http://google.com/"
-			}
-			""".trimIndent()
-
-		createShortUrl(shortUrlDTO)
-			.andExpect(status().isBadRequest)
-	}
-
-	@Test
 	fun `test short url creation fails for empty long url`() {
 		val shortUrlDTO = """
 			{
-				"domain": "http://www.example.com/",
 				"longUrl": ""
 			}
 			""".trimIndent()
@@ -90,7 +75,6 @@ class ShortUrlControllerIntegrationTest {
 	fun `test short url creation fails for invalid long url`() {
 		val shortUrlDTO = """
 			{
-				"domain": "http://www.example.com/",
 				"longUrl": "htt://www.google.com/"
 			}
 			""".trimIndent()
@@ -103,7 +87,6 @@ class ShortUrlControllerIntegrationTest {
 	fun `test opening short url works`() {
 		val shortUrlDTO = """
 			{
-				"domain": "http://example.com/",
 				"longUrl": "http://google.com/"
 			}
 			""".trimIndent()
